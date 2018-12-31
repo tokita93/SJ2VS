@@ -1,0 +1,23 @@
+.button {
+	width: 160px;
+	height: 160px;
+	margin: 5px;
+}
+
+.tip {
+	font-size: x-small;
+}
+
+.current {
+	font-size: small;
+	color:#ffa500;
+}
+
+.reaction {
+	opacity:0.5;
+	position:absolute;
+	z-index:5;
+	font-size:400px;;
+	top:50;
+	bottom:50;
+}
