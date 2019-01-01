@@ -1,5 +1,3 @@
-
-
 (function() {
 	var animes = ["fadeOut", "fadeOutDown", "fadeOutRight", "zoomOutDown", "zoomOutUp", "slideOutDown", "slideOutUp", "rotateOutDownRight", "rotateOutUpLeft"]
 	var chartAnimations = ['bounce', 'rubberBand', 'shake', 'jello', 'tada', 'wobble',];
@@ -23,7 +21,6 @@
       label: "SUMMER JIMAN JAM 2017",
       labels:["カイゼン！", "つながるー！", "あついっ！", "JIMAN！"],
       
-      
       datasets: [{
       	data: [0, 0, 0, 0],
       	backgroundColor:["#3399FF","#FFCC33","#FF3333","#66CC66"],
@@ -42,16 +39,12 @@
             yAxes: [{
             	display:false,
                 ticks: {
-                	//suggestedMin: 0,
-                	//suggestedMax: 64,
                     beginAtZero:false
                 }
             }],
             xAxes: [{
             	display:false,
                 ticks: {
-                	//suggestedMin: 50,
-                	//suggestedMax: 64,
                     beginAtZero:false
                 }
             }],
@@ -77,26 +70,26 @@
 
 
 	var getSpeakerInfo = function() {
-			$.ajax({
-				url:location.protocol + "//" + location.host + "/sj2/current.xml",
-				type:"GET",
-				cache: false,
-				dataType: "xml",
-				success : function(data) {
-					var speakerEl = $(data).find("speaker");
-					speakerId = speakerEl.find("id").text();
-					var speakerName = speakerEl.find("name").text();
-					var title = speakerEl.find("title").text();
+			// $.ajax({
+			// 	url:location.protocol + "//" + location.host + "/sj2/current.xml",
+			// 	type:"GET",
+			// 	cache: false,
+			// 	dataType: "xml",
+			// 	success : function(data) {
+			// 		var speakerEl = $(data).find("speaker");
+			// 		speakerId = speakerEl.find("id").text();
+			// 		var speakerName = speakerEl.find("name").text();
+			// 		var title = speakerEl.find("title").text();
 					
-					var speakerEnabled = speakerId != "";
-					if (!speakerEnabled) {
-						speakerName = "---"
-					} 
-					$("#speaker").text(speakerName);
-					$("#title").text(title);
+			// 		var speakerEnabled = speakerId != "";
+			// 		if (!speakerEnabled) {
+			// 			speakerName = "---"
+			// 		} 
+			// 		$("#speaker").text(speakerName);
+			// 		$("#title").text(title);
 					
-				}
-			});
+			// 	}
+			// });
 	};
 	getSpeakerInfo();
 	setInterval(getSpeakerInfo, 1000);

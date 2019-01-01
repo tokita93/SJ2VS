@@ -1,4 +1,21 @@
 (function() {
+	var getUrl = function() {
+		return location.protocol + "//" + location.host;
+	}
+
+	var speakers = [];
+	var init = function() {
+		$.get(getUrl() + "/api/config", function(data) {
+			$.each(data.Category, function(index, value) {
+				console.log($('categoryLabel' + index));
+				$('#categoryLabel' + index).html(value.name);
+				$('#categoryDesc' + index).html(value.detail);
+			});
+			speakers = data.Speakers;
+		});
+	};
+	init();
+
 	var animes = ["bounce", "flash", "pulse", "rubberBand", "shake", "headShake", "swing", "tada", "wobble", "jello"]
 	var speakerId = "";
 	var nameEnabled = false;
@@ -40,7 +57,7 @@
 		button.addClass(animation);
 		
 		try { 
-			$.get(location.protocol + "//" + location.host + "/dataspider/trigger/sj2reaction", {
+			$.get(getUrl() + "/api/reaction", {
 				"currentId" : speakerId,
 				"name" : $("#name").val(),
 				"reaction" : reaction
@@ -57,29 +74,31 @@
 	$(".button").click(onclick);
 	
 	var getSpeakerInfo = function() {
-			$.ajax({
-				url:location.protocol + "//" + location.host + "/sj2/current.xml",
-				type:"GET",
-				cache: false,
-				dataType: "xml",
-				success : function(data) {
-					var speakerEl = $(data).find("speaker");
-					speakerId = speakerEl.find("id").text();
-					var speakerName = speakerEl.find("name").text();
-					var title = speakerEl.find("title").text();
+			// $.ajax({
+			// 	url:location.protocol + "//" + location.host + "/sj2/current.xml",
+			// 	type:"GET",
+			// 	cache: false,
+			// 	dataType: "xml",
+			// 	success : function(data) {
+			// 		var speakerEl = $(data).find("speaker");
+			// 		speakerId = speakerEl.find("id").text();
+			// 		var speakerName = speakerEl.find("name").text();
+			// 		var title = speakerEl.find("title").text();
 					
-					var speakerEnabled = speakerId != "";
-					if (!speakerEnabled) {
-						speakerName = "---"
-					} 
-					$(".button").prop("disabled", !nameEnabled || !speakerEnabled);
-					$("#speaker").text(speakerName);
-					$("#title").text(title);
+			// 		var speakerEnabled = speakerId != "";
+			// 		if (!speakerEnabled) {
+			// 			speakerName = "---"
+			// 		} 
+			// 		$(".button").prop("disabled", !nameEnabled || !speakerEnabled);
+			// 		$("#speaker").text(speakerName);
+			// 		$("#title").text(title);
 					
-				}
-			});
+			// 	}
+			// });
 	};
 	getSpeakerInfo();
 	setInterval(getSpeakerInfo, 1000);
+
+
 	
 })();

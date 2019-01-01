@@ -2,23 +2,33 @@
     "Category" : [
         {
             "name" : "カテゴリ1",
-            "id" : "Cate1",
             "detail" : "カテゴリ1です！"
        } ,
        {
             "name" : "カテゴリ2",
-            "id" : "Cate2",
             "detail" : "カテゴリ2だよ！"
        } ,
        {
             "name" : "カテゴリ3",
-            "id" : "Cate3",
             "detail" : "カテゴリ3！"
        } ,
        {
             "name" : "カテゴリ4",
-            "id" : "Cate4",
             "detail" : "カテゴリ4だ！"
        } 
+    ],
+    "Speaker" : [
+        {
+            "name" : "",
+            "title" : ""
+        },
+        {
+            "name" : "スピーカー1",
+            "title" : "タイトル"
+        },
+        {
+            "name" : "スピーカー2",
+            "title" : "ダミータイトル"
+        }
     ]
 }
