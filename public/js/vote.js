@@ -4,12 +4,13 @@
 	}
 
 	var speakers = [];
+	var categories = [];
 	var init = function() {
 		$.get(getUrl() + "/api/config", function(data) {
 			$.each(data.Category, function(index, value) {
-				console.log($('categoryLabel' + index));
 				$('#categoryLabel' + index).html(value.name);
 				$('#categoryDesc' + index).html(value.detail);
+				categories.push(value.id);
 			});
 			speakers = data.Speakers;
 		});
@@ -49,7 +50,9 @@
 	var onclick = function(e) {
 		var animation = animes[Math.floor(Math.random() * animes.length)];
 		var button = $(this);
-		var reaction = button.attr("id");
+		// REVISIT:　ボタンのカテゴリのとり方を修正する
+		var categoryIndex = button.attr('id').replace('category',''	);
+		console.log(categoryIndex);
 		var name = $("#name").val();
 		
 		button.prop("disabled", true);
@@ -58,11 +61,13 @@
 		
 		try { 
 			$.get(getUrl() + "/api/reaction", {
-				"currentId" : speakerId,
+				"speakerId" : speakerId,
 				"name" : $("#name").val(),
-				"reaction" : reaction
+				"categoryId" : categories[categoryIndex]
 			});
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 		
 		setTimeout(function() {
 				button.removeClass("animated");
@@ -74,6 +79,7 @@
 	$(".button").click(onclick);
 	
 	var getSpeakerInfo = function() {
+		$("#speaker").text("dummy");
 			// $.ajax({
 			// 	url:location.protocol + "//" + location.host + "/sj2/current.xml",
 			// 	type:"GET",

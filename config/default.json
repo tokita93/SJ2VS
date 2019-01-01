@@ -1,32 +1,39 @@
 {
     "Category" : [
         {
+            "id" : "category1",
             "name" : "カテゴリ1",
             "detail" : "カテゴリ1です！"
        } ,
        {
+            "id" : "category2",
             "name" : "カテゴリ2",
             "detail" : "カテゴリ2だよ！"
        } ,
        {
+            "id" : "category3",
             "name" : "カテゴリ3",
             "detail" : "カテゴリ3！"
        } ,
        {
+            "id" : "category4",
             "name" : "カテゴリ4",
             "detail" : "カテゴリ4だ！"
        } 
     ],
     "Speaker" : [
         {
+            "id" : "", 
             "name" : "",
             "title" : ""
         },
         {
+            "id": "speaker1",
             "name" : "スピーカー1",
             "title" : "タイトル"
         },
         {
+            "id": "speaker2",
             "name" : "スピーカー2",
             "title" : "ダミータイトル"
         }
