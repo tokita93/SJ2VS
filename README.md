@@ -32,7 +32,7 @@ LT会場で各参加者のスマホやPCなどから開くことを想定して�
 
 
 ### 投票結果確認画面
-![image](https://user-images.githubusercontent.com/10110956/50640168-6336c680-0fa7-11e9-8b51-ba4ca99d9168.png)
+<img src="https://user-images.githubusercontent.com/10110956/50640168-6336c680-0fa7-11e9-8b51-ba4ca99d9168.png" width="200px">
 投票結果確認画面は以下のURLです。
 ```
 <URL>/monitor.html
@@ -44,7 +44,7 @@ LT会場でプロジェクタに移して投票結果をモニタリングする
 コントロール画面で登壇者を変更すると、それに合わせてグラフも変更されます。
 
 ### コントローラ画面
-![image](https://user-images.githubusercontent.com/10110956/50640214-7ea1d180-0fa7-11e9-84a5-99a43abcf885.png)
+<img src="https://user-images.githubusercontent.com/10110956/50640214-7ea1d180-0fa7-11e9-84a5-99a43abcf885.png" width="200px">
 
 コントローラ画面は以下のURLです。
 ```
