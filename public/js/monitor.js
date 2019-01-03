@@ -1,4 +1,25 @@
 (function() {
+	var getUrl = function() {
+		return location.protocol + "//" + location.host;
+	}
+	var title = "";
+	var categoryNames = [];
+	var categoryIds = {};
+	var speakers = {};
+	var init = function() {
+		$.get(getUrl() + "/api/config", function(data) {
+			title = data.title;
+			$.each(data.category, function(index, category) {
+				categoryNames.push(category.name);
+				categoryIds[category.id] = index;
+			});
+			$.each(data.speaker, function(index, speaker) {
+				speakers[speaker.id] = speaker;
+			});
+		});
+	};
+	init();
+
 	var animes = ["fadeOut", "fadeOutDown", "fadeOutRight", "zoomOutDown", "zoomOutUp", "slideOutDown", "slideOutUp", "rotateOutDownRight", "rotateOutUpLeft"]
 	var chartAnimations = ['bounce', 'rubberBand', 'shake', 'jello', 'tada', 'wobble',];
 	$.fn.extend({
@@ -18,8 +39,8 @@
 	var myChart = new Chart(ctx, {
     type: 'polarArea',
 	data: {
-      label: "SUMMER JIMAN JAM 2017",
-      labels:["カイゼン！", "つながるー！", "あついっ！", "JIMAN！"],
+      label: title,
+      labels:categoryNames,
       
       datasets: [{
       	data: [0, 0, 0, 0],
@@ -67,45 +88,26 @@
         }
     }
 });
-
-
-	var getSpeakerInfo = function() {
-			// $.ajax({
-			// 	url:location.protocol + "//" + location.host + "/sj2/current.xml",
-			// 	type:"GET",
-			// 	cache: false,
-			// 	dataType: "xml",
-			// 	success : function(data) {
-			// 		var speakerEl = $(data).find("speaker");
-			// 		speakerId = speakerEl.find("id").text();
-			// 		var speakerName = speakerEl.find("name").text();
-			// 		var title = speakerEl.find("title").text();
-					
-			// 		var speakerEnabled = speakerId != "";
-			// 		if (!speakerEnabled) {
-			// 			speakerName = "---"
-			// 		} 
-			// 		$("#speaker").text(speakerName);
-			// 		$("#title").text(title);
-					
-			// 	}
-			// });
-	};
-	getSpeakerInfo();
-	setInterval(getSpeakerInfo, 1000);
-	var dataIndex = {"kaizen":0, "tsunagu":1,"passion":2, "jiman":3 };
 	
-	var getData = function() {
-		$.ajax({
-			url:location.protocol + "//" + location.host + "/sj2/reaction.xml",
-			type:"GET",
-			cache: false,
-			dataType: "xml",
-			success : function(data) {
-				
+var getData = function() {
+	$.get(getUrl() + "/api/monitor", function(data) {
+			// REMIND vote.jsと重複
+			speakerId = data.speakerId;
+			var speaker = speakers[speakerId];
+			var speakerName = speaker.name;
+			var title = speaker.title;
+			var speakerEnabled = speakerId != "";
+			if (!speakerEnabled) {
+				speakerName = "---";
+				title = "---";
+			} 
+			$(".button").prop("disabled", !nameEnabled || !speakerEnabled);
+			$("#speaker").text(speakerName);
+			$("#title").text(title);
+
 				$(".reaction").remove();
 			
-				var els = $(data).find("reaction");
+				var els = data.monitor;
 				
 				if (els.length == 0) {
 					myChart.data.datasets[0].data = [0,0,0,0];
@@ -115,10 +117,10 @@
 					ctx.removeClass("animated");
 					ctx.removeClass("shake");
 					var diffSum = 0;
-					els.each(function(reaction) {
-						var value = $(this).find("value").text();
-						var count = $(this).find("count").text();
-						var index = dataIndex[value];
+					els.forEach(function(data) {
+						var value = data.id;
+						var count = data.count;
+						var index = categoryIds[value];
 						if (index != null) {
 							var previous = myChart.data.datasets[0].data[index];
 							var diff = count - previous;
@@ -144,7 +146,7 @@
 					}
 				}
 			}
-		});
+		);
 	};
 	getData();
 	setInterval(getData, 1000);

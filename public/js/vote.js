@@ -3,16 +3,18 @@
 		return location.protocol + "//" + location.host;
 	}
 
-	var speakers = [];
-	var categories = [];
+	var speakers = {};
 	var init = function() {
 		$.get(getUrl() + "/api/config", function(data) {
-			$.each(data.Category, function(index, value) {
-				$('#categoryLabel' + index).html(value.name);
-				$('#categoryDesc' + index).html(value.detail);
-				categories.push(value.id);
+			$('#title').html = data.title;
+			$.each(data.category, function(index, category) {
+				$('#category' + index).attr('data-id', category.id);
+				$('#categoryLabel' + index).html(category.name);
+				$('#categoryDesc' + index).html(category.detail);
 			});
-			speakers = data.Speakers;
+			$.each(data.speaker, function(index, speaker) {
+				speakers[speaker.id] = speaker;
+			});
 		});
 	};
 	init();
@@ -50,9 +52,7 @@
 	var onclick = function(e) {
 		var animation = animes[Math.floor(Math.random() * animes.length)];
 		var button = $(this);
-		// REVISIT:　ボタンのカテゴリのとり方を修正する
-		var categoryIndex = button.attr('id').replace('category',''	);
-		console.log(categoryIndex);
+		var categoryId = button.attr('data-id');
 		var name = $("#name").val();
 		
 		button.prop("disabled", true);
@@ -60,10 +60,10 @@
 		button.addClass(animation);
 		
 		try { 
-			$.get(getUrl() + "/api/reaction", {
+			$.post(getUrl() + "/api/reaction", {
 				"speakerId" : speakerId,
 				"name" : $("#name").val(),
-				"categoryId" : categories[categoryIndex]
+				"categoryId" : categoryId
 			});
 		} catch (e) {
 			console.log(e);
@@ -79,28 +79,21 @@
 	$(".button").click(onclick);
 	
 	var getSpeakerInfo = function() {
-		$("#speaker").text("dummy");
-			// $.ajax({
-			// 	url:location.protocol + "//" + location.host + "/sj2/current.xml",
-			// 	type:"GET",
-			// 	cache: false,
-			// 	dataType: "xml",
-			// 	success : function(data) {
-			// 		var speakerEl = $(data).find("speaker");
-			// 		speakerId = speakerEl.find("id").text();
-			// 		var speakerName = speakerEl.find("name").text();
-			// 		var title = speakerEl.find("title").text();
-					
-			// 		var speakerEnabled = speakerId != "";
-			// 		if (!speakerEnabled) {
-			// 			speakerName = "---"
-			// 		} 
-			// 		$(".button").prop("disabled", !nameEnabled || !speakerEnabled);
-			// 		$("#speaker").text(speakerName);
-			// 		$("#title").text(title);
-					
-			// 	}
-			// });
+		$.get(getUrl() + "/data/current.json", function(data) {
+				speakerId = data.speakerId;
+				var speaker = speakers[speakerId];
+				var speakerName = speaker.name;
+				var title = speaker.title;
+				var speakerEnabled = speakerId != "";
+				if (!speakerEnabled) {
+					speakerName = "---";
+					title = "---";
+				} 
+				$(".button").prop("disabled", !nameEnabled || !speakerEnabled);
+				$("#speaker").text(speakerName);
+				$("#title").text(title);
+			}
+		);
 	};
 	getSpeakerInfo();
 	setInterval(getSpeakerInfo, 1000);

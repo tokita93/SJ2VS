@@ -1,5 +1,6 @@
 {
-    "Category" : [
+    "title" : "DUMMY TITLE",
+    "category" : [
         {
             "id" : "category1",
             "name" : "カテゴリ1",
@@ -21,7 +22,7 @@
             "detail" : "カテゴリ4だ！"
        } 
     ],
-    "Speaker" : [
+    "speaker" : [
         {
             "id" : "", 
             "name" : "",
