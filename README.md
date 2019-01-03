@@ -21,22 +21,22 @@ YVYは「yurui vote yarouze」の略称です。
 YVYを起動し、htmlにアクセスすれば投票システムがスタートできます。
 
 ### 投票画面
-<img src="https://user-images.githubusercontent.com/10110956/50640114-31bdfb00-0fa7-11e9-8978-8b309b64fda3.png" width="200px">
 投票画面は以下のURLです（index.htmlとして用意されているため、URLだけでアクセス可能です）。
 LT会場で各参加者のスマホやPCなどから開くことを想定しています。
 ```
 <URL>
 ```
+<img src="https://user-images.githubusercontent.com/10110956/50640114-31bdfb00-0fa7-11e9-8978-8b309b64fda3.png" width="200px">
 名前を入れれば投票をすることが可能です。
 投票ボタンはクリック後、1秒待って再度クリック可能になります。
 
 
 ### 投票結果確認画面
-<img src="https://user-images.githubusercontent.com/10110956/50640168-6336c680-0fa7-11e9-8b51-ba4ca99d9168.png" width="200px">
 投票結果確認画面は以下のURLです。
 ```
 <URL>/monitor.html
 ```
+<img src="https://user-images.githubusercontent.com/10110956/50640168-6336c680-0fa7-11e9-8b51-ba4ca99d9168.png" width="200px">
 投票結果を確認することができます。
 LT会場でプロジェクタに移して投票結果をモニタリングすることを想定しています。
 
@@ -44,12 +44,12 @@ LT会場でプロジェクタに移して投票結果をモニタリングする
 コントロール画面で登壇者を変更すると、それに合わせてグラフも変更されます。
 
 ### コントローラ画面
-<img src="https://user-images.githubusercontent.com/10110956/50640214-7ea1d180-0fa7-11e9-84a5-99a43abcf885.png" width="200px">
 
 コントローラ画面は以下のURLです。
 ```
 <URL>/controller.html
 ```
+<img src="https://user-images.githubusercontent.com/10110956/50640214-7ea1d180-0fa7-11e9-84a5-99a43abcf885.png" width="200px">
 登壇者の変更や結果のダウンロードなどを行うことができます。
 LTイベントで主催者が開いて制御することを想定しています。
 
