@@ -21,7 +21,7 @@ YVYは「yurui vote yarouze」の略称です。
 YVYを起動し、htmlにアクセスすれば投票システムがスタートできます。
 
 ### 投票画面
-![image](https://user-images.githubusercontent.com/10110956/50640114-31bdfb00-0fa7-11e9-8978-8b309b64fda3.png)
+<img src="https://user-images.githubusercontent.com/10110956/50640114-31bdfb00-0fa7-11e9-8978-8b309b64fda3.png" width="200px">
 投票画面は以下のURLです（index.htmlとして用意されているため、URLだけでアクセス可能です）。
 LT会場で各参加者のスマホやPCなどから開くことを想定しています。
 ```
