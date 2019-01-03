@@ -18,9 +18,9 @@ setInterval(function() {
   try {
     currentSpeakerId = JSON.parse(fs.readFileSync(curentStatusFile, 'utf8')).speakerId;
   } catch(e) {
-    console.log(e);
   }  
 }, 3000);
+currentSpeakerId = JSON.parse(fs.readFileSync(curentStatusFile, 'utf8')).speakerId;
 
 router.get('/config', function(req, res, next) {
   res.json(conf);
@@ -32,8 +32,10 @@ router.get('/status', function(req, res, next) {
 
 router.post('/speaker', function(req, res, next) {
   currentSpeakerId = req.body.speakerId;
+  console.log(currentSpeakerId);
   var saveText = { 'speakerId': currentSpeakerId};
-  fs.writeFileSync(curentStatusFile, saveText, 'utf8');
+  fs.writeFileSync(curentStatusFile, JSON.stringify(saveText), 'utf8');
+  res.sendStatus(201);
 });
 
 router.post('/reaction', function(req, res, next) {
@@ -47,18 +49,19 @@ router.post('/reaction', function(req, res, next) {
 });
 
 router.get('/monitor', function(req, res, next) {
+  var count = {};
+  conf.category.forEach(element => {
+    count[element.id] = 0;
+  });
   db.find({"speakerId" : currentSpeakerId}, {multi:true}, function(err, docs) {
-    var sum = docs.reduce(function(result, current) {
-      var currentCount = result[current.categoryId];
-      if (typeof currentCount === 'undefined') {
-        currentCount = 0;
-      } 
-      result[current.categoryId] = currentCount + 1;
-      return result
-    }, {});
-    var resultArray = [];
-    Object.keys(sum).forEach(function(data) {resultArray.push({"id" : data, "count": sum[data]})});
-    res.json({"speakerId": currentSpeakerId, "monitor" : resultArray});
+  var sum = docs.reduce(function(result, current) {
+    result[current.categoryId] = result[current.categoryId] + 1;
+    return result
+  }, count);
+  console.log(sum);
+  var resultArray = [];
+  Object.keys(sum).forEach(function(data) {resultArray.push({"id" : data, "count": sum[data]})});
+  res.json({"speakerId": currentSpeakerId, "monitor" : resultArray});
   });
 });
 

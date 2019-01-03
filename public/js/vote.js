@@ -1,23 +1,10 @@
 (function() {
-	var getUrl = function() {
-		return location.protocol + "//" + location.host;
-	}
-
-	var speakers = {};
-	var init = function() {
-		$.get(getUrl() + "/api/config", function(data) {
-			$('#title').html = data.title;
-			$.each(data.category, function(index, category) {
-				$('#category' + index).attr('data-id', category.id);
-				$('#categoryLabel' + index).html(category.name);
-				$('#categoryDesc' + index).html(category.detail);
-			});
-			$.each(data.speaker, function(index, speaker) {
-				speakers[speaker.id] = speaker;
-			});
-		});
-	};
-	init();
+	$('#title').html(COMMON.title);
+	$.each(COMMON.category, function(index, category) {
+		$('#category' + index).attr('data-id', category.id);
+		$('#categoryLabel' + index).html(category.name);
+		$('#categoryDesc' + index).html(category.detail);
+	});
 
 	var animes = ["bounce", "flash", "pulse", "rubberBand", "shake", "headShake", "swing", "tada", "wobble", "jello"]
 	var speakerId = "";
@@ -42,7 +29,7 @@
 		$("#inputmsg").text("");
 		nameEnabled =  true;
 		
-		nameEnabled = $("#name").val().length > 0
+		nameEnabled = $("#name").val().length > 0;
 	}
 	
 	$("#name").change(checkName);
@@ -60,11 +47,7 @@
 		button.addClass(animation);
 		
 		try { 
-			$.post(getUrl() + "/api/reaction", {
-				"speakerId" : speakerId,
-				"name" : $("#name").val(),
-				"categoryId" : categoryId
-			});
+			COMMON.vote(speakerId, name, categoryId);
 		} catch (e) {
 			console.log(e);
 		}
@@ -78,25 +61,25 @@
 	}
 	$(".button").click(onclick);
 	
-	var getSpeakerInfo = function() {
-		$.get(getUrl() + "/data/current.json", function(data) {
-				speakerId = data.speakerId;
-				var speaker = speakers[speakerId];
-				var speakerName = speaker.name;
-				var title = speaker.title;
-				var speakerEnabled = speakerId != "";
-				if (!speakerEnabled) {
-					speakerName = "---";
-					title = "---";
-				} 
-				$(".button").prop("disabled", !nameEnabled || !speakerEnabled);
-				$("#speaker").text(speakerName);
-				$("#title").text(title);
-			}
-		);
-	};
-	getSpeakerInfo();
-	setInterval(getSpeakerInfo, 1000);
+	var getCurrentSpeaker = function() {
+		COMMON.getCurrentSpeaker(function(data) {
+			console.log(data);
+			speakerId = data.speakerId;
+			var speaker = COMMON.getSpeaker(speakerId);
+			var speakerName = speaker.name;
+			var title = speaker.title;
+			var speakerEnabled = speakerId != "";
+			if (!speakerEnabled) {
+				speakerName = "---";
+				title = "---";
+			} 
+			$(".button").prop("disabled", !nameEnabled || !speakerEnabled);
+			$("#speaker").text(speakerName);
+			$("#speakerTitle").text(title);
+		});
+	}
+	getCurrentSpeaker();
+	setInterval(getCurrentSpeaker, COMMON.interval);
 
 
 	
