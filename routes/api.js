@@ -1,4 +1,5 @@
 var express = require('express');
+var csv = require('csv-express');
 var conf = require('config');
 var fs = require('fs');
 var router = express.Router();
@@ -32,7 +33,6 @@ router.get('/status', function(req, res, next) {
 
 router.post('/speaker', function(req, res, next) {
   currentSpeakerId = req.body.speakerId;
-  console.log(currentSpeakerId);
   var saveText = { 'speakerId': currentSpeakerId};
   fs.writeFileSync(curentStatusFile, JSON.stringify(saveText), 'utf8');
   res.sendStatus(201);
@@ -54,14 +54,33 @@ router.get('/monitor', function(req, res, next) {
     count[element.id] = 0;
   });
   db.find({"speakerId" : currentSpeakerId}, {multi:true}, function(err, docs) {
-  var sum = docs.reduce(function(result, current) {
-    result[current.categoryId] = result[current.categoryId] + 1;
-    return result
-  }, count);
-  console.log(sum);
-  var resultArray = [];
-  Object.keys(sum).forEach(function(data) {resultArray.push({"id" : data, "count": sum[data]})});
-  res.json({"speakerId": currentSpeakerId, "monitor" : resultArray});
+    var sum = docs.reduce(function(result, current) {
+      result[current.categoryId] = result[current.categoryId] + 1;
+      return result
+    }, count);
+    var resultArray = [];
+    Object.keys(sum).forEach(function(data) {resultArray.push({"id" : data, "count": sum[data]})});
+    res.json({"speakerId": currentSpeakerId, "monitor" : resultArray});
+  });
+});
+
+router.get('/result.json', function(req, res, next) {
+  var count = {};
+  conf.category.forEach(element => {
+    count[element.id] = 0;
+  });
+  db.find({}, {multi:true}, function(err, docs) {
+    res.json(docs);
+  });
+});
+
+router.get('/result.csv', function(req, res, next) {
+  var count = {};
+  conf.category.forEach(element => {
+    count[element.id] = 0;
+  });
+  db.find({}, {multi:true}, function(err, docs) {
+    res.csv(docs, true);
   });
 });
 
@@ -70,5 +89,6 @@ router.get('/reset', function(req, res, next) {
   db.remove({}, { multi: true }, function (err, numRemoved) {});
   res.send("reset done");
 });
+
 
 module.exports = router;

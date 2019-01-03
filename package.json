@@ -8,6 +8,7 @@
   "dependencies": {
     "config": "^3.0.1",
     "cookie-parser": "~1.4.3",
+    "csv-express": "^1.2.2",
     "debug": "~2.6.9",
     "eslint": "^5.11.1",
     "express": "~4.16.0",

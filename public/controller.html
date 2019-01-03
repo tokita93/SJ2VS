@@ -25,9 +25,40 @@
 
 <hr>
 <h4>登壇者セレクト</h4>
+<span>登壇者を選択します。選択すると投票画面・モニター画面に反映されます。</span>
 <select id="speakerSelect" class="form-control"></select>
+<hr>
+<h4>投票結果ダウンロード</h4>
+<div>/api/result.json</div>
+<form action="/api/result.json">
+<button type="submit" class="btn btn-hg btn-embossed btn-info">
+  	<i class="glyphicon  glyphicon-cloud-download"></i>
+    <span>ダウンロード(JSON)</span><br>
+    <span class="button btn-tips tip">これまでの投票結果をJSONでダウンロードします。</span>
+</button>
+</form>
+<br>
+<div>/api/result.csv</div>
+<form action="/api/result.csv">
+<button type="submit" class="btn btn-hg btn-embossed btn-warning">
+  	<i class="glyphicon  glyphicon-cloud-download"></i>
+    <span>ダウンロード(CSV)</span><br>
+    <span class="button btn-tips tip">これまでの投票結果をCSVでダウンロードします。</span>
+</button>
+</form>
+<hr>
+<h4>投票結果リセット</h4>
+<div>/api/reset</div>
+<form action="/api/reset">
+<button type="submit" class="btn btn-hg btn-embossed btn-primary" id="reset">
+  	<i class="glyphicon glyphicon-remove"></i>
+    <span>投票結果をリセット</span><br>
+    <span class="button btn-tips tip">これまでの投票結果をリセットします。</span>
+</button>
+</form>
+<hr>
 
-    </div>
+
     <!-- /.container -->
 
 
