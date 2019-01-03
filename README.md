@@ -85,13 +85,13 @@ node bin/www
 
 ## Issues
 
-- 投票結果の取得は、コントロール画面から
-
-## Contribution
+- 投票結果をグラフ化する機能は未実装です
+- jQueryから他のフレームワークに移行予定です
+- クライアント、サーバ共に共通化の余地が大きいため、リファクタリングの必要があります。
 
 ## Licence
 
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+[Gorge Public License](http://gorge.in/2015/12/cathedralandbazzar/)
 
 ## Author
 
