@@ -1,3 +1,2 @@
 db/storage.db
-public/data/current.jsons
-*node_modules/
+public/data/current.json
