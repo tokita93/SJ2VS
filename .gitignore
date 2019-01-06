@@ -1,3 +1,3 @@
 db/storage.db
 public/data/current.jsons
-
+*node_modules/
